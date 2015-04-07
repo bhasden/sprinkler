@@ -1,7 +1,4 @@
 return function (connection, args, formData)
-    local ssid = formData["ssid"]
-    local password = formData["password"]
-    
     local function updateWifi()
         print("Updating wifi credentials")
         wifi.sta.config(ssid, password)
@@ -10,6 +7,9 @@ return function (connection, args, formData)
         node.restart()
     end
 
+    local ssid = formData["ssid"]
+    local password = formData["password"]
+    
     connection:send("HTTP/1.0 200 OK\r\nContent-Type: text/html\r\Cache-Control: private, no-store\r\n\r\n")
     connection:send('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Arguments</title></head>')
     connection:send('<body>')

@@ -13,5 +13,4 @@ else
     print("STA IP: " .. wifi.sta.getip())
 end
 
---tmr.alarm(0, 10000, 0, startUp)
-tmr.alarm(1, 10000, 0, function() dofile('startup.lua') end)
+tmr.alarm(1, 10000, 0, function() dofile('startup.lc') end)
