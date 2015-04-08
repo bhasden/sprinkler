@@ -28,14 +28,13 @@ local function startWebServer()
 end
 
 local function startSprinklerController()
-     sprinklers = dofile("sprinklerController.lc")({
-         clearPin = 2, -- 4
-         clockPin = 0, -- 16
-         dataPin = 7, -- 13
-         enablePin = 6, -- 12
-         latchPin = 5, -- 14
-     })
-     sprinklers.turnOff()
+    dofile("sprinklerController-turnOff.lc")({
+        clearPin = 2, -- 4
+        clockPin = 0, -- 16
+        dataPin = 7, -- 13
+        enablePin = 6, -- 12
+        latchPin = 5, -- 14
+    })
 end
 
 -- Connect to the WiFi access point. Once the device is connected,

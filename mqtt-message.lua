@@ -6,8 +6,20 @@ return function(topic, data)
     
     if topic == wifi.sta.getmac() .. "/zone/on" then
         local zoneData = cjson.decode(data)
-        sprinklers.turnOn(zoneData.zone)
+        dofile("sprinklerController.lc")({
+            clearPin = 2, -- 4
+            clockPin = 0, -- 16
+            dataPin = 7, -- 13
+            enablePin = 6, -- 12
+            latchPin = 5, -- 14
+        }, zoneData.zone)
     elseif topic == wifi.sta.getmac() .. "/zone/off" then
-        sprinklers.turnOff()
+        dofile("sprinklerController-turnOff.lc")({
+            clearPin = 2, -- 4
+            clockPin = 0, -- 16
+            dataPin = 7, -- 13
+            enablePin = 6, -- 12
+            latchPin = 5, -- 14
+        })
     end
 end

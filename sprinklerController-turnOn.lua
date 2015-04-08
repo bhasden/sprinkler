@@ -2,6 +2,12 @@ return function(config, zone)
     -- Clear any already on zones
     print("Turning on zone " .. zone)
     
+    gpio.mode(config.clearPin, gpio.OUTPUT)
+    gpio.mode(config.clockPin, gpio.OUTPUT)
+    gpio.mode(config.dataPin, gpio.OUTPUT)
+    gpio.mode(config.enablePin, gpio.OUTPUT)
+    gpio.mode(config.latchPin, gpio.OUTPUT)
+    
     gpio.write(config.clearPin, gpio.HIGH)
     gpio.write(config.enablePin, gpio.LOW)
     gpio.write(config.latchPin, gpio.LOW)
