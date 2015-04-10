@@ -1,3 +1,5 @@
+currentZone = nil
+
 return function(config, zone)
     -- Clear any already on zones
     print("Turning on zone " .. zone)
@@ -26,4 +28,5 @@ return function(config, zone)
     
     -- Make it so
     gpio.write(config.latchPin, gpio.HIGH)
+    currentZone = zone;
 end

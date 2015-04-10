@@ -10,4 +10,6 @@ return function(config)
     -- Clear zones
     gpio.write(config.clearPin, gpio.LOW)
     gpio.write(config.enablePin, gpio.HIGH)
+    
+    currentZone = nil
 end

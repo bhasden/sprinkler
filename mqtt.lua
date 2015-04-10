@@ -4,18 +4,14 @@ local function setupClient(client, config)
         client:connect(config.address, config.port, 0, function(conn) 
             print("MQTT Connected")
             client:subscribe(wifi.sta.getmac() .. "/zone/on", 0, function(conn) 
-                print("MQTT Subscribed")
-            end)
-        end)
-    
-        tmr.alarm(1, 20000, 0, function()
-            client:publish(wifi.sta.getmac() .. "/zone/on", cjson.encode({ zone = 2 }), 0, 0, function(conn) 
-                print("MQTT Sent") 
-            end)
-                
-            tmr.alarm(1, 10000, 0, function()
-                client:publish(wifi.sta.getmac() .. "/zone/off", "", 0, 0, function(conn) 
-                    print("MQTT Sent")
+                print("MQTT Subscribed On")
+
+                client:subscribe(wifi.sta.getmac() .. "/zone/off", 0, function(conn) 
+                    print("MQTT Subscribed Off")
+                        
+                    client:subscribe(wifi.sta.getmac() .. "/zone/request", 0, function(conn) 
+                        print("MQTT Subscribed Request")
+                    end)
                 end)
             end)
         end)
@@ -29,12 +25,13 @@ return function(config)
 
     m:on("offline", function(con) 
         print ("MQTT Reconnecting...")
+        tmr.delay(10000)
         tmr.alarm(0, 10000, 1, function() setupClient(m, config) end)
     end)
 
     -- on publish message receive event
     m:on("message", function(conn, topic, data)
-        dofile("mqtt-message.lc")(topic, data)
+        dofile("mqtt-message.lc")(m, topic, data)
     end)
 
     tmr.alarm(0, 1000, 1, function() setupClient(m, config) end)

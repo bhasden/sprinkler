@@ -1,6 +1,6 @@
 local function startMqtt()
      mqtt = dofile("mqtt.lc")({
-         address = "107.155.90.192",
+         address = "mqtt.yoovea.com",
          port = 1883
      })
 end
